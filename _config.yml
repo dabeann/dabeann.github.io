@@ -14,9 +14,9 @@ baseurl: "dabeann.github.io"
 username: dabeannn
 # typing_text: This will be typed before 'scroll down for more'.
 # > set this to your job title, e.g. Fullstack Developer
-typing_text: Jekyll Theme
+typing_text: hihi
 # email: Your E-Mail address for the email button.
-email: email@example.com
+email: dabin6469@gmail.com
 # For every social button you want to display, set your username or userid
 # If you do not use one of the following websites, then leave it empty
 # > twitter_username:
@@ -86,7 +86,7 @@ contact_description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, se
 # GITHUB-METADATA
 # Set this to your forked repository
 # > e.g. <user>/<user>.github.io
-repository: longpdo/neumorphism
+repository: dabeann/dabeann.github.io
 projects:
   # sortby:
   # > set this to pushed, if you want to sort your github repositories by time.
