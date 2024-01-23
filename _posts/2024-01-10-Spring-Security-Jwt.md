@@ -12,13 +12,32 @@ Header, Payload, Signature 3개의 부분으로 구성되어 있다.
 
 ### Header
 Signature를 해싱하기 위한 알고리즘 정보들이 담겨있다.
+```
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
 
 ### Payload
 Server와 Client가 주고받는, 시스템에서 실제로 사용될 정보에 대한 내용들을 담고있다.
+```
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "admin": true
+}
+```
 
 ### Signature
 Token의 유효성 검증을 위한 문자열
 이 문자열을 통해 서버에서는 이 token이 유효한 token인지를 검증할 수 있다.
+```
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret)
+```
 
 ### JWT 장점
 - 중앙의 인증서버, 데이터 스토어에 대한 의존성 없음
@@ -36,3 +55,4 @@ http: 벨 연구소 www - 내부 망에 따라서 서로 송수신 한다.
 - 그래서 RFC 2616 같은 많은 약속들이 생김
 - 인터넷은 RFC 문서로 이루어져 있다.
 - RFC 7519 번째에 만들어진 것이 JWT!!!
+
