@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://dabeann.github.io/
+Sitemap: https://dabeann.github.io/sitemap.xml
