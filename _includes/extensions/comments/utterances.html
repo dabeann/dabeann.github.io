@@ -31,21 +31,30 @@
   utterancesScript.async = true;
   utterancesScript.src = 'https://utteranc.es/client.js';
   utterancesScript.crossOrigin = 'anonymous';
-  utterancesScript.setAttribute('issue-term', '{{ site.utterances.issue_term }}');
-  utterancesScript.setAttribute('label', '{{ site.utterances.label }}');
-  utterancesScript.setAttribute('repo', '{{ site.utterances.repo }}');
+  utterancesScript.setAttribute('issue-term', 'pathname');
+  utterancesScript.setAttribute('label', 'comments');
+  utterancesScript.setAttribute('repo', 'dabeann/dabeann.github.io');
   utterancesScript.setAttribute('theme', utterancesThemeFromDataTheme());
 
   const placeholder = document.getElementById('utterances-placeholder');
   placeholder.parentNode.replaceChild(utterancesScript, placeholder);
 </script>
 {%- else -%}
-<script async
+<!-- <script async
         crossorigin="anonymous"
         issue-term="{{ site.utterances.issue_term }}"
         label="{{ site.utterances.label }}"
         repo="{{ site.utterances.repo }}"
         src="https://utteranc.es/client.js"
         theme="{{ site.utterances.theme }}">
- </script>
+ </script> -->
+<script 
+  src="https://utteranc.es/client.js"
+  repo="dabeann/dabeann.github.io"
+  issue-term="pathname"
+  label="comments"
+  theme="github-light"
+  crossorigin="anonymous"
+async>
+</script>
 {%- endif -%}
