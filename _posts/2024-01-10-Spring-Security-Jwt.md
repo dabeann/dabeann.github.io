@@ -2,7 +2,7 @@
 layout: post
 title: Spring Security Jwt
 subtitle: 
-categories: backend
+categories: SpringBoot
 tags: [security, jwt]
 ---
 ## JWT
