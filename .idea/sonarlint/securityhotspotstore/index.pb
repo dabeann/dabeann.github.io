@@ -11,3 +11,5 @@ X
 (_posts/2024-03-01-개발관련-지원.md,a\d\ad603af70b7783c786e1dbec70c24d2e52e9dc9f
 U
 %_posts/2024-04-19-querydsl-setting.md,7\d\7d71d45b54b4c6cf76989f6ad45d72bad798401f
+W
+'_posts/2024-04-21-naver-map-crawling.md,8\3\83a516363ae73ec82959d979bfd97826a82de9d4
