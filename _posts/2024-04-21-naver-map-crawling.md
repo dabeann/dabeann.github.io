@@ -90,4 +90,69 @@ List<WebElement> priceElements = driver.findElements(By.xpath("//div[@class='GXS
 > 그래도 1페이지 검색 했을 경우, 네이버 주문이 가능한 가게는 1개였기에 그냥 무시하고 넘어가기로 결정했다.  
 
 ### 메뉴 버튼 클릭
-ㅇㅇㅇ
+![image](https://github.com/dabeann/dabeann.github.io/assets/127164905/bdf16f72-86f6-40a9-85b9-842d540a7ec1)
+보통 가게는 오른쪽 사진과 같이 [홈 / 소식 / 메뉴 / … ] 로 바가 구성되어 있다.  
+그래서 처음엔 `driver.findElement(By.xpath("//div[@class='flicking-camera']/*[3]")).click();` 코드만 썼다.  
+바 에서 3번째 “메뉴” 를 클릭하기 위해! 3번째 값 클릭하도록 했다.  
+  
+왜 오류가 나나 찾아보니 [홈 / 메뉴 / … ] 로 구성된 가게들도 있었다.  
+`"//div[@class='flicking-camera']//*[contains(text(), '메뉴')]"` 를 넣어 ‘메뉴’ 텍스트를 포함하는 것을 우선적으로 클릭하도록 하였다.  
+근데 또 ‘메뉴’ 글씨만 클릭하게 하니깐 무슨 *안보여서 클릭못한다* .. 에러가 떠서 try catch문으로 둘 다 넣었다.
+```java
+try {
+      // 텍스트를 포함하는 요소를 찾기 위한 XPath
+      driver.findElement(By.xpath("//div[@class='flicking-camera']//*[contains(text(), '메뉴')]")).click();
+} catch (Exception ex) {
+     // 바에서 보통 3번째가 '메뉴'
+     driver.findElement(By.xpath("//div[@class='flicking-camera']/*[3]")).click();
+   }
+```
+
+### div class 이름
+[Selenium으로 네이버 지도 크롤링하기](https://velog.io/@kimdy0915/Selenium%EC%9C%BC%EB%A1%9C-%EB%84%A4%EC%9D%B4%EB%B2%84-%EC%A7%80%EB%8F%84-%ED%81%AC%EB%A1%A4%EB%A7%81%ED%95%98%EA%B8%B0)  
+처음에는 위 링크만 보고 따라했다. 하지만 class이름이 바뀐 것인지 모조리 에러가 났다.  
+`.findElement(By.className("LDgIH"));` **LDgIH**라는 클래스 이름이 없었다.  
+-> 찾을 부분 우클릭 -> 검사 를 클릭하게 되면 어느부분인지 html이 나온다. 이걸 토대로 클래스 이름을 찾는다.  
+![image](https://github.com/dabeann/dabeann.github.io/assets/127164905/22063e3f-cb4d-4a11-a9eb-d574b18c2d33)  
+
+### 가격 정보 class 이름
+처음에는 `"//div[@class='GXS1X']/em"` 했었다.  
+클래스 안에서 em tag 안에 가격이 있었기 때문이다.
+![image](https://github.com/dabeann/dabeann.github.io/assets/127164905/eb16ce17-0395-4703-8e80-679e79824ca5)  
+  
+하지만 위와 같이 코드를 짜면 "변동" 가격이 아예 들어가지 않는다. "변동"은 em tag 안에 없기 때문이다.
+![image](https://github.com/dabeann/dabeann.github.io/assets/127164905/c38292cb-a4d9-42b1-be30-1c89a924210c)
+  
+또한 가격이 "2500~2600"와 같은 범위형이면 값을 가져올 때 `priceElements` 리스트에 2500, 2600 두 개의 값이 따로 들어간다.  
+-> 결국 메뉴 이름 리스트와 개수가 달라져서 index overflow가 발생한다.
+![image](https://github.com/dabeann/dabeann.github.io/assets/127164905/09fdf04b-9767-4620-9b15-50801008934e)
+
+→ `"//div[@class='GXS1X']/em"`  → `"//div[@class='GXS1X']”`로 바꾸니 해결됐다.  
+```java
+// 변동 가격이랑 123~124 이런 가격도 나오도록
+List<WebElement> priceElements = driver.findElements(By.xpath("//div[@class='GXS1X']"));
+```
+
+### 다음페이지 버튼 클릭
+이전페이지와 다음페이지의 클래스 이름이 같아서 한참 헤멨다.  
+![image](https://github.com/dabeann/dabeann.github.io/assets/127164905/2277e33b-877e-4030-b378-f6a3c838a1db)
+![image](https://github.com/dabeann/dabeann.github.io/assets/127164905/14fd6b37-0e12-49f1-ac52-057fd79f8a1f)  
+따라서 “다음페이지” 라는 text를 가진 element를 클릭하도록 설정했다.  
+```java
+// 다음 페이지로 가는 버튼
+WebElement nextButton = driver.findElement(By.xpath("//span[contains(text(), '다음페이지')]/.."));
+```
+
+## 전체 코드
+나의 리포지토리 파일 링크이다.  
+[크롤링 코드 전체](https://github.com/dajeongdev/Americanote/blob/develop/src/main/java/com/coffee/americanote/cafe/service/CrawlingCafe.java)  
+
+## 후기
+크롤링을 이번 프로젝트하며 처음 경험하였다. 
+내가 알던 자바 코드와는 다르게 짜야해서 생소했다. 객체지향적으로 짤 수도 없고 ... 하는 내내 고민이 많았다.  
+  
+크롤링을 하는 동안은 내가 개발자가 아닌 느낌이 들었다. (자바 코드보다 웹 사이트에서 태그를 더 많이 봤다 ㅎㅎ)  
+그래도 크롤링을 다 하고 정보를 db에 넣으니 정말 뿌듯했다~!  
+이 코드를 나중에 재활용하지는 않을 것 같지만 내가 크롤링 코드를 짜며 힘들었던 부분을 정리해 보았다.  
+
+다음에 크롤링할 기회가 온다면 더 빠르게 코드를 짤 수 있다 !!.
