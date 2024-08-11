@@ -3,7 +3,7 @@ layout: post
 title: How To Write Blog
 subtitle: MarkDown Grammar
 author: dabeann
-categories: write
+categories: Write
 banner:
   # video: https://vjs.zencdn.net/v/oceans.mp4
   # loop: true
