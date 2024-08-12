@@ -16,7 +16,7 @@ banner:
   # min_height: "38px"
   heading_style: "font-size: 4.25em; font-weight: bold; text-decoration: underline"
   subheading_style: "color: gold" #이거해서 subtitle이 금색임
-tags: write blog
+tags: blog
 top: 1
 sidebar: []
 ---
